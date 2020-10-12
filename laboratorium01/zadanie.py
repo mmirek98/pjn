@@ -67,13 +67,6 @@ def zlicz_wyrazy(nazwa_pliku):
     return (wyrazy, długość_tekstu)
 
 
-def oblicz_czestosc_do_N(wyrazy):
-    czestosc = 0
-    for i in range(len(wyrazy)):
-        czestosc += wyrazy[i][1]
-    return czestosc
-
-
 def znajdz_formy_podstawowe(wyrazy):
     formy = collections.Counter()
     for wyraz, liczba_powtorzen in wyrazy.most_common():
@@ -103,8 +96,10 @@ def zadanie_6_stworz_wykres_pokrycia_wyrazow(wyrazy):
     plt.xscale('log')
     plt.yscale('linear')
     y = [0]
-    for _ in wyrazy.most_common():
-        y.append(oblicz_czestosc_do_N(wyrazy.most_common(len(y))))
+    for wyraz in wyrazy.most_common():
+        i = len(y) - 1
+        czestosc = wyraz[1] + y[i]
+        y.append(czestosc)
     plt.plot(y)
     plt.title(f'Pokrycie tekstu przez {len(wyrazy)} wyrazów\nw książce {KSIĄŻKA}')
     plt.show()
@@ -130,7 +125,9 @@ def zadanie_8_stworz_wykres_pokrycia_form_podstawowych(wyrazy):
     formy = znajdz_formy_podstawowe(wyrazy)
     y = [0]
     for wyraz in formy.most_common():
-        y.append(oblicz_czestosc_do_N(formy.most_common(len(y))))
+        i = len(y) - 1
+        czestosc = wyraz[1] + y[i]
+        y.append(czestosc)
 
     plt.title(f'Pokrycie tekstu przez {len(formy)} form podstawowych\nw książce {KSIĄŻKA}')
     plt.plot(y)
